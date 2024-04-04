@@ -11,7 +11,7 @@ url, _ := gourl.New("https://example.com/api/v1")
 fmt.Println(url.Hostname()) // example.com
 
 url.Hostname("hello.com")
-fmt.Println(url.Href()) // hello.com
+fmt.Println(url.Href()) // https://hello.com/api/v1
 ```
 
 ## Methods
