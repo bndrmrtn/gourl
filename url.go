@@ -3,6 +3,7 @@ package gourl
 import (
 	"errors"
 	"github.com/bndrmrtn/gourl/internal/parts"
+	"github.com/bndrmrtn/gourl/internal/query"
 	"regexp"
 	"strings"
 )
@@ -102,6 +103,10 @@ func (g *GoURL) Search(set ...map[string]string) string {
 		g.u.Search = strings.TrimSuffix(g.u.Search, "&")
 	}
 	return g.u.Search
+}
+
+func (g *GoURL) Query() *query.Builder {
+	return query.New(g.u)
 }
 
 func (g *GoURL) Username(set ...string) string {

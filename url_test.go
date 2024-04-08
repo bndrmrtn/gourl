@@ -56,3 +56,22 @@ func Test_UsernameAndPassword(t *testing.T) {
 	url.Username("john")
 	assert.Equal(t, "john", url.Username())
 }
+
+func Test_Queries(t *testing.T) {
+	url, err := New("http://localhost/api/?username=john")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "john", url.Query().Get("username"))
+
+	url.Query().Set("key", "secret")
+	assert.Equal(t, "secret", url.Query().Get("key"), "Query must be changed")
+
+	url.Query().Delete("username")
+	assert.Equal(t, "", url.Query().Get("username"), "Query must be deleted")
+	assert.Equal(t, "http://localhost/api/?key=secret", url.Href(), "Query must be deleted")
+
+	url.Query().SetList("access_keys", []string{"secret", "1234", "admin"})
+	assert.Equal(t, []string{"secret", "1234", "admin"}, url.Query().GetList("access_keys"), "Query list must be changed")
+}
